@@ -1,7 +1,9 @@
 ---
 - name: create instance(s) on ec2
-  hosts: localhost
+  hosts: all
   remote_user: root
+  vars:
+    instance_ip_addresses: []
 
   tasks:
     - name: create an instance on ec2
@@ -34,3 +36,17 @@
       remote_user: ec2-user
       loop: "{{ ec2.instances }}"
       when: ec2.instances|length > 0
+
+    - name: add public dns names to list
+      set_fact:
+        instance_ip_addresses: "{{ instance_ip_addresses }} + ['{{ item.public_dns_name }}']"
+
+    - name: show me the instance_ip_addresses variable
+      debug:
+        var: instance_ip_addresses
+        verbosity: 2
+
+    - name: pass on the data :)
+      set_stats:
+        data:
+          instance_ip_addresses: "{{ instance_ip_addresses }}"
