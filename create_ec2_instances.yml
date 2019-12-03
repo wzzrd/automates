@@ -1,9 +1,8 @@
 ---
 - name: create instance(s) on ec2
   hosts: localhost
-  remote_user: root
-  become: no
-  connection: local
+  remote_user: ec2-user
+  become: yes
 
   tasks:
     - name: create an instance on ec2
@@ -34,5 +33,4 @@
       wait_for_connection:
         delay: 30
       loop: "{{ ec2.instances }}"
-      delegate_to: "{{ item.public_dns_name }}"
       when: ec2.instances|length > 0
