@@ -1,0 +1,21 @@
+---
+- name: create instance(s) on gce
+  hosts: localhost
+  remote_user: root
+  vars:
+    instance_ip_addresses: []
+
+  tasks:
+    - name: create instance template
+      gce_compute_instance_template:
+        auth_kind: serviceaccount
+        name: automates2019template
+        project: ansible-automates-20191211 
+        properties:
+          tags:
+            items:
+              "{{ tag }}"
+      state: present
+      register: instancetemplate
+      delegate_to: localhost
+
