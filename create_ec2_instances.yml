@@ -18,7 +18,8 @@
         count: "{{ count }}"
         region: eu-central-1
         wait_timeout: 300
-        instance_tags: automates
+        instance_tags: 
+          event: automates2019
       register: ec2
 
     - name: wait for instances to come up
