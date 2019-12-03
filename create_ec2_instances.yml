@@ -15,12 +15,17 @@
         key_name: ansible_tower
         assign_public_ip: yes
         wait: yes
-        count: "{{ count }}"
+        exact_count: "{{ count }}"
         region: eu-central-1
         wait_timeout: 300
+        count_tag:
+          event: automates2019
         instance_tags: 
           event: automates2019
+        vpc_subnet_id: subnet-900e39da
+        group_id: sg-b2d436da
       register: ec2
+      delegate_to: localhost
 
     - name: wait for instances to come up
       delegate_to: "{{ item.public_dns_name }}"
