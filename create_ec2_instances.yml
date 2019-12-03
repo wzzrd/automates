@@ -10,8 +10,6 @@
       ec2:
         image: ami-0badcc5b522737046
         instance_type: t2.medium
-        id: automates
-        state: "{{ state }}"
         key_name: ansible_tower
         assign_public_ip: yes
         wait: yes
