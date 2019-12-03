@@ -26,7 +26,9 @@
       delegate_to: localhost
 
     - name: show me the ec2 variable
-      var: ec2
+      debug:
+        var: ec2
+        verbosity: 2
 
     - name: wait for instances to come up
       wait_for_connection:
