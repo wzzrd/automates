@@ -17,9 +17,9 @@
         region: eu-central-1
         wait_timeout: 300
         count_tag:
-          event: automates2019
+          event: "{{ tag }}"
         instance_tags:
-          event: automates2019
+          event: "{{ tag }}"
         vpc_subnet_id: subnet-900e39da
         group_id: sg-b2d436da
       register: ec2
