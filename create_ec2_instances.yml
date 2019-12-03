@@ -25,28 +25,30 @@
       register: ec2
       delegate_to: localhost
 
-    - name: show me the ec2 variable
-      debug:
-        var: ec2
-        verbosity: 2
+    - name: wait until machines are up and pass along public DNS names
+      block:
+        - name: show me the ec2 variable
+          debug:
+            var: ec2
+            verbosity: 2
 
-    - name: wait for instances to come up
-      wait_for_connection:
-        delay: 10
-      remote_user: ec2-user
-      loop: "{{ ec2.instances }}"
+        - name: wait for instances to come up
+          wait_for_connection:
+            delay: 10
+          remote_user: ec2-user
+          loop: "{{ ec2.instances }}"
+
+        - name: add public dns names to list
+          set_fact:
+            instance_ip_addresses: "{{ instance_ip_addresses }} + ['{{ item.public_dns_name }}']"
+
+        - name: show me the instance_ip_addresses variable
+          debug:
+            var: instance_ip_addresses
+            verbosity: 2
+
+        - name: pass on the data :)
+          set_stats:
+            data:
+              instance_ip_addresses: "{{ instance_ip_addresses }}"
       when: ec2.instances|length > 0
-
-    - name: add public dns names to list
-      set_fact:
-        instance_ip_addresses: "{{ instance_ip_addresses }} + ['{{ item.public_dns_name }}']"
-
-    - name: show me the instance_ip_addresses variable
-      debug:
-        var: instance_ip_addresses
-        verbosity: 2
-
-    - name: pass on the data :)
-      set_stats:
-        data:
-          instance_ip_addresses: "{{ instance_ip_addresses }}"
