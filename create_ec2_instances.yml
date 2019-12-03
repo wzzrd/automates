@@ -18,7 +18,7 @@
         wait_timeout: 300
         count_tag:
           event: automates2019
-        instance_tags: 
+        instance_tags:
           event: automates2019
         vpc_subnet_id: subnet-900e39da
         group_id: sg-b2d436da
@@ -26,7 +26,8 @@
       delegate_to: localhost
 
     - name: wait for instances to come up
-      delegate_to: "{{ item.public_dns_name }}"
       wait_for_connection:
         delay: 30
       loop: "{{ ec2.instances }}"
+      delegate_to: "{{ item.public_dns_name }}"
+      when: ec.instances|length > 0
