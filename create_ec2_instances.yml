@@ -2,7 +2,6 @@
 - name: create instance(s) on ec2
   hosts: localhost
   remote_user: root
-  become: yes
 
   tasks:
     - name: create an instance on ec2
