@@ -41,6 +41,7 @@
         - name: add public dns names to list
           set_fact:
             instance_ip_addresses: "{{ instance_ip_addresses }} + ['{{ item.public_dns_name }}']"
+          loop: "{{ ec2.instances }}"
 
         - name: show me the instance_ip_addresses variable
           debug:
