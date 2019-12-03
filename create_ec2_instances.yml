@@ -1,6 +1,6 @@
 ---
 - name: create instance(s) on ec2
-  hosts: all
+  hosts: localhost
   remote_user: root
   vars:
     instance_ip_addresses: []
