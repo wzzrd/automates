@@ -6,7 +6,7 @@
     instance_ip_addresses: []
 
   tasks:
-    - name: create an instance on ec2
+    - name: create instance(s) on ec2
       ec2:
         image: ami-0badcc5b522737046
         instance_type: t2.medium
