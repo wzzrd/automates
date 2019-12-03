@@ -1,7 +1,7 @@
 ---
 - name: create instance(s) on ec2
   hosts: localhost
-  remote_user: ec2-user
+  remote_user: root
   become: yes
 
   tasks:
@@ -32,5 +32,6 @@
     - name: wait for instances to come up
       wait_for_connection:
         delay: 30
+      remote_user: ec2-user
       loop: "{{ ec2.instances }}"
       when: ec2.instances|length > 0
