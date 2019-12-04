@@ -36,5 +36,5 @@
 
     - name: show me the gce variable
       debug:
-        var: ec2
+        var: gce
         verbosity: 2
