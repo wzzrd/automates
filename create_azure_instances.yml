@@ -75,6 +75,7 @@
         name: automates2019
         vm_size: Standard_DS1_v2
         admin_username: maxim
+        ssh_password_enabled: no
         ssh_public_keys:
           - path: /home/maxim/.ssh/authorized_keys
             key_data: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCy1QtNy21ILU3OjY0vgGCFYB5EWZLOwCMe4GqTjFfeVDvBgbQzHmf9OHMcoTreUWnPxgZa2frwzFgzamJl978ixWxPKpeNI9qQ1BO9ZBbg5YGVIYrNFFiw0j2B1mOx4u3tn1ntIW3cAJuOmFSI6U6NZy8JRGmkIvxjBzSqPTTUNfDNGtk00XiwrDHD69e0Zn5sX9W7ERf0QsWGK0tlj2YnaOty2MsRia96OgqGO+oqd6FggmIwPIb+2S0RghQLSRLyWFMKY68zZwugSLkl9r/TSrHPgJjGMWaIX1LyO8SbGrLToL7Cg0ptQrhosz1T2+zcdc+Z6fppTB2lF3cvF92b root@tower.ibm.nontoonyt.com"
