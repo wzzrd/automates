@@ -32,5 +32,5 @@
       azure_rm_resourcegroup:
         name: automates2019
         location: westeurope
-        force_empty_nonempty: yes
+        force_delete_nonempty: yes
         state: absent
