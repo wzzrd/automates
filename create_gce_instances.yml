@@ -7,10 +7,10 @@
 
   tasks:
     - name: create instance(s) on gce
-      gce_compute_instance:
+      gcp_compute_instance:
         auth_kind: serviceaccount
         name: automates2019template
-        project: ansible-automates-20191211 
+        project: ansible-automates-20191211
         labels:
           event: "{{ tag }}"
         machine_type: n1-standard-1
@@ -20,3 +20,7 @@
       register: gce
       delegate_to: localhost
 
+    - name: show me the gce variable
+      debug:
+        var: ec2
+        verbosity: 2
