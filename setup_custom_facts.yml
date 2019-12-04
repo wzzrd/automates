@@ -20,4 +20,4 @@
         mode: 0755
 
     - name: reload ansible_local
-      setup: filter=ansible_local
+      setup:
