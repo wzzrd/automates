@@ -29,8 +29,7 @@
       add_host:
         name: "{{ item.public_dns_name }}"
         groups: tmpgroup
-      loop:
-        - "{{ ec2.instances }}"
+      loop: "{{ ec2.instances }}"
 
     - name: show me the ec2 variable
       debug:
