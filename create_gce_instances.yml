@@ -34,39 +34,36 @@
       register: gce
       delegate_to: localhost
 
-    - name: wait until machines are up and pass along public IP addresses
-      block:
-        - name: show me the gce variable
-          debug:
-            var: gce
-            verbosity: 2
+    - name: show me the gce variable
+      debug:
+        var: gce
+        verbosity: 2
 
-        - name: set public_ip fact
-          set_fact:
-            public_ip: "{{ gce.networkInterfaces[0].accessConfigs[0].natIP }}"
+    - name: set public_ip fact
+      set_fact:
+        public_ip: "{{ gce.networkInterfaces[0].accessConfigs[0].natIP }}"
 
-        - name: show me the natIP variable
-          debug:
-            var: public_ip
-            verbosity: 2
+    - name: show me the natIP variable
+      debug:
+        var: public_ip
+        verbosity: 2
 
-        - name: wait for instances to come up
-          wait_for_connection:
-            delay: 10
-          remote_user: maxim
-          loop: "[ {{ public_ip }} ]"
+    - name: wait for instances to come up
+      wait_for_connection:
+        delay: 10
+      remote_user: maxim
+      loop: "['{{ public_ip }}']"
 
-        - name: add public ip address to list
-          set_fact:
-            instance_ip_addresses: "['{{ public_ip }}']"
+    - name: add public ip address to list
+      set_fact:
+        instance_ip_addresses: "['{{ public_ip }}']"
 
-        - name: show me the instance_ip_addresses variable
-          debug:
-            var: instance_ip_addresses
-            verbosity: 2
+    - name: show me the instance_ip_addresses variable
+      debug:
+        var: instance_ip_addresses
+        verbosity: 2
 
-        - name: pass on the data :)
-          set_stats:
-            data:
-              instance_ip_addresses: "{{ instance_ip_addresses }}"
-      when: gce.status == "RUNNING"
+    - name: pass on the data :)
+      set_stats:
+        data:
+          instance_ip_addresses: "{{ instance_ip_addresses }}"
