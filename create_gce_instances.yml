@@ -17,6 +17,11 @@
         labels:
           event: "{{ tag }}"
         machine_type: n1-standard-1
+        disks:
+          - auto_delete: yes
+            initialize_params:
+              disk_size_gb: 20
+              source_image: projects/rhel-cloud/global/images/rhel-7-v20191121
         network_interfaces:
           - network: "{{ network }}"
             access_configs:
