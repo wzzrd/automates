@@ -72,7 +72,7 @@
     - name: Create VM
       azure_rm_virtualmachine:
         resource_group: automates2019
-        name: automates2019
+        name: automates2019azure
         vm_size: Standard_DS1_v2
         admin_username: maxim
         ssh_password_enabled: no

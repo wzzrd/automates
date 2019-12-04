@@ -23,7 +23,7 @@
     - name: clean up gcp
       gcp_compute_instance:
         auth_kind: serviceaccount
-        name: automates2019
+        name: automates2019gce
         project: ansible-automates-20191211
         state: absent
         zone: europe-west2-a
