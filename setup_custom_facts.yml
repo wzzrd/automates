@@ -15,8 +15,8 @@
 
     - name: set up custom facts
       template:
-        src: facts.sh
-        dest: /etc/ansible/facts.d/facts.sh
+        src: facts.fact
+        dest: /etc/ansible/facts.d/facts.fact
         mode: 0755
 
     - name: reload ansible_local
