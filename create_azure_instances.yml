@@ -29,8 +29,6 @@
         virtual_network_name: automates2019
         name: automates2019
         address_prefix_cidr: "10.0.1.0/24"
-        tags: 
-          event: automates2019
 
     - name: create public ip address
       azure_rm_publicipaddress:
