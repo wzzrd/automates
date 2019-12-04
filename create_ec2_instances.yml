@@ -2,6 +2,7 @@
 - name: create instance(s) on ec2
   hosts: localhost
   remote_user: root
+  gather_facts: no
   vars:
     instance_ip_addresses: []
 
