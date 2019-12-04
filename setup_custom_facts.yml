@@ -2,7 +2,6 @@
 - name: finish configuration of hosts
   hosts: all
   become: yes
-  remote_user: ec2-user
   gather_facts: yes
 
   tasks:
