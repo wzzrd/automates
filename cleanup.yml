@@ -1,0 +1,64 @@
+---
+- name: cleanup all cloud instances
+  hosts: localhost
+
+  tasks:
+    - name: clean up aws
+      ec2:
+        image: ami-0badcc5b522737046
+        instance_type: t2.medium
+        key_name: ansible_tower
+        assign_public_ip: yes
+        wait: yes
+        exact_count: 0
+        region: eu-central-1
+        wait_timeout: 300
+        count_tag:
+          event: "{{ tag }}"
+        instance_tags:
+          event: "{{ tag }}"
+        vpc_subnet_id: subnet-900e39da
+        group_id: sg-b2d436da
+      delegate_to: localhost
+
+    - name: clean up gcp
+      gcp_compute_instance:
+        auth_kind: serviceaccount
+        name: automates2019
+        project: ansible-automates-20191211
+        state: absent
+        zone: europe-west2-a
+      delegate_to: localhost
+
+    - name: delete azure vm
+      azure_rm_virtualmachine:
+        resource_group: automates2019
+        name: automates2019
+        state: absent
+        remove_on_absent: all
+      register: azure
+
+    - name: create nsg that allows ssh and http
+      azure_rm_securitygroup:
+        resource_group: automates2019
+        name: automates2019
+        state: absent
+
+    - name: create subnet
+      azure_rm_subnet:
+        resource_group: automates2019
+        virtual_network_name: automates2019
+        name: automates2019
+        state: absent
+
+    - name: create network
+      azure_rm_virtualnetwork:
+        resource_group: automates2019
+        name: automates2019
+        state: absent
+
+    - name: create resource group
+      azure_rm_resourcegroup:
+        name: automates2019
+        location: westeurope
+        state: absent
