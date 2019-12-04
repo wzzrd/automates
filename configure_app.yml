@@ -1,0 +1,11 @@
+---
+- name: configure app
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: install web server
+      yum:
+          update_cache: yes
+          name: httpd
+          state: present
