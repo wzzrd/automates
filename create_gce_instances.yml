@@ -6,7 +6,7 @@
   vars:
     instance_ip_addresses: []
     network:
-      selfLink: projects/ansible-automates-20191211/regions/europe-west4/subnetworks/default
+      selfLink: projects/ansible-automates-20191211/global/networks/default
 
   tasks:
     - name: create instance(s) on gce
