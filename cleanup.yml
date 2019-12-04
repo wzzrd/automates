@@ -28,32 +28,6 @@
         state: absent
         zone: europe-west2-a
 
-    - name: delete azure vm
-      azure_rm_virtualmachine:
-        resource_group: automates2019
-        name: automates2019
-        state: absent
-        remove_on_absent: all
-
-    - name: delete nsg
-      azure_rm_securitygroup:
-        resource_group: automates2019
-        name: automates2019
-        state: absent
-
-    - name: delete subnet
-      azure_rm_subnet:
-        resource_group: automates2019
-        virtual_network_name: automates2019
-        name: automates2019
-        state: absent
-
-    - name: delete network
-      azure_rm_virtualnetwork:
-        resource_group: automates2019
-        name: automates2019
-        state: absent
-
     - name: delete resource group
       azure_rm_resourcegroup:
         name: automates2019
