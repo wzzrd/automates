@@ -12,7 +12,7 @@
     - name: create instance(s) on gce
       gcp_compute_instance:
         auth_kind: serviceaccount
-        name: automates2019template
+        name: automates2019
         project: ansible-automates-20191211
         labels:
           event: "{{ tag }}"
@@ -34,7 +34,35 @@
       register: gce
       delegate_to: localhost
 
-    - name: show me the gce variable
-      debug:
-        var: gce
-        verbosity: 2
+    - name: wait until machines are up and pass along public IP addresses
+      block:
+        - name: show me the gce variable
+          debug:
+            var: gce
+            verbosity: 2
+
+        - name: show me the natIP variable
+          debug:
+            var: gce.networkInterfaces[0].accessConfigs.natIP
+            verbosity: 2
+
+        - name: wait for instances to come up
+          wait_for_connection:
+            delay: 10
+          remote_user: maxim
+          loop: "{{ gce.networkInterfaces[0].accessConfigs.natIP }}"
+
+        - name: add public ip address to list
+          set_fact:
+            instance_ip_addresses: "['{{ gce.networkInterfaces[0].accessConfigs.natIP }}']"
+
+        - name: show me the instance_ip_addresses variable
+          debug:
+            var: instance_ip_addresses
+            verbosity: 2
+
+        - name: pass on the data :)
+          set_stats:
+            data:
+              instance_ip_addresses: "{{ instance_ip_addresses }}"
+      when: gce.status == "RUNNING"
