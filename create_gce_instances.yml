@@ -2,8 +2,11 @@
 - name: create instance(s) on gce
   hosts: localhost
   remote_user: root
+  gather_facts: no
   vars:
     instance_ip_addresses: []
+    network:
+      selfLink: projects/ansible-automates-20191211/regions/europe-west4/subnetworks/default
 
   tasks:
     - name: create instance(s) on gce
@@ -15,9 +18,10 @@
           event: "{{ tag }}"
         machine_type: n1-standard-1
         network_interfaces:
-          access_configs:
-            - name: External NAT
-              type: ONE_TO_ONE_NAT
+          - network: "{{ network }}"
+            access_configs:
+              - name: External NAT
+                type: ONE_TO_ONE_NAT
         state: present
         status: RUNNING
         zone: europe-west4-a
