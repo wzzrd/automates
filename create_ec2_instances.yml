@@ -1,7 +1,6 @@
 ---
 - name: create instance(s) on ec2
   hosts: localhost
-  remote_user: root
   gather_facts: no
   vars:
     instance_ip_addresses: []
@@ -26,13 +25,24 @@
       register: ec2
       delegate_to: localhost
 
+    - name: add new hosts to tmpgroup
+      add_host:
+        name: "{{ item.public_dns_name }}"
+        groups: tmpgroup
+      loop:
+        - "{{ ec2.instances }}"
+
     - name: show me the ec2 variable
       debug:
         var: ec2
         verbosity: 2
 
+- name: check connectivity
+  hosts: tmpgroup
+  remote_user: ec2-user
+  gather_facts: no
+
+  tasks:
     - name: wait for instances to come up
       wait_for_connection:
         delay: 10
-      remote_user: ec2-user
-      loop: "{{ ec2.instances }}"

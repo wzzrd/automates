@@ -93,3 +93,27 @@
       debug:
         var: azure
         verbosity: 2
+
+    - name: set public_ip fact
+      set_fact:
+        public_ip: "{{ azure.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
+
+    - name: show me the natIP variable
+      debug:
+        var: public_ip
+        verbosity: 2
+
+    - name: add new hosts to tmpgroup
+      add_host:
+        name: "{{ public_ip }}"
+        groups: tmpgroup
+
+- name: check connectivity
+  hosts: tmpgroup
+  remote_user: maxim
+  gather_facts: no
+
+  tasks:
+    - name: wait for instances to come up
+      wait_for_connection:
+        delay: 10
