@@ -52,7 +52,8 @@
       wait_for_connection:
         delay: 10
       remote_user: maxim
-      loop: "['{{ public_ip }}']"
+      loop: 
+        - "{{ public_ip }}"
 
     - name: add public ip address to list
       set_fact:
