@@ -6,8 +6,8 @@
     instance_ip_addresses: []
 
   tasks:
-    - name: create instance template
-      gce_compute_instance_template:
+    - name: create instance(s) on gce
+      gce_compute_instance:
         auth_kind: serviceaccount
         name: automates2019template
         project: ansible-automates-20191211 
@@ -17,6 +17,6 @@
         state: present
         status: RUNNING
         zone: europe-west4-a
-      register: instancetemplate
+      register: gce
       delegate_to: localhost
 
