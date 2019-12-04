@@ -1,0 +1,79 @@
+---
+- name: create instance(s) on azure
+  hosts: localhost
+  gather_facts: no
+  vars:
+    instance_ip_addresses: []
+
+  tasks:
+    - name: create resource group
+      azure_rm_resourcegroup:
+          name: automates2019
+          tags: automates2019
+          location: westeurope
+          state: present
+
+    - name: create network
+      azure_rm_virtualnetwork:
+          resource_group: automates2019
+          name: automates2019
+          tags: automates2019
+          state: present
+
+    - name: create subnet
+      azure_rm_subnet:
+          resource_group: automates2019
+          virtual_network_name: automates2019
+          name: automates2019
+          address_prefix_cidr: "10.0.1.0/24"
+          tags: automates2019
+
+    - name: create public ip address
+      azure_rm_publicipaddress:
+          resource_group: automates2019
+          name: automates2019
+          tags: automates2019
+          state: present
+    
+    - name: create nsg that allows ssh and http
+      azure_rm_securitygroup:
+        resource_group: automates2019
+        name: automates2019
+        rules:
+          - name: SSH
+            protocol: Tcp
+            destination_port_range: 22
+            access: Allow
+            priority: 1001
+            direction: Inbound
+          - name: HTTP
+            protocol: Tcp
+            destination_port_range: 80
+            access: Allow
+            priority: 1001
+            direction: Inbound
+
+    - name: create virtual network interface card
+      azure_rm_networkinterface:
+        resource_group: automates2019
+        name: automates2019
+        virtual_network: automates2019
+        subnet: automates2019
+        public_ip_name: automates2019
+        security_group: automates2019
+
+    - name: Create VM
+      azure_rm_virtualmachine:
+        resource_group: automates2019
+        name: automates2019
+        vm_size: Standard_DS1_v2
+        admin_username: root
+        ssh_public_keys:
+          - path: /root/.ssh/authorized_keys
+            key_data: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCy1QtNy21ILU3OjY0vgGCFYB5EWZLOwCMe4GqTjFfeVDvBgbQzHmf9OHMcoTreUWnPxgZa2frwzFgzamJl978ixWxPKpeNI9qQ1BO9ZBbg5YGVIYrNFFiw0j2B1mOx4u3tn1ntIW3cAJuOmFSI6U6NZy8JRGmkIvxjBzSqPTTUNfDNGtk00XiwrDHD69e0Zn5sX9W7ERf0QsWGK0tlj2YnaOty2MsRia96OgqGO+oqd6FggmIwPIb+2S0RghQLSRLyWFMKY68zZwugSLkl9r/TSrHPgJjGMWaIX1LyO8SbGrLToL7Cg0ptQrhosz1T2+zcdc+Z6fppTB2lF3cvF92b root@tower.ibm.nontoonyt.com"
+        network_interfaces: automates2019
+        image:
+          offer: RHEL
+          publisher: RedHat
+          sku: '7.7'
+          version: latest
