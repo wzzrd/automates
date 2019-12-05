@@ -39,6 +39,7 @@
 - name: check connectivity and set-up user
   hosts: tmpgroup
   remote_user: ec2-user
+  become: yes
   gather_facts: no
 
   tasks:

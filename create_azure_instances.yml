@@ -111,6 +111,7 @@
 - name: check connectivity
   hosts: tmpgroup
   remote_user: maxim
+  become: yes
   gather_facts: no
 
   tasks:
