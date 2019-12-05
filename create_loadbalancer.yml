@@ -23,7 +23,7 @@
     - name: add cloud servers to pool
       haproxy:
         state: enabled
-        host: " {{ item }}"
+        host: " {{ ansible_host }}"
         socket: /var/run/haproxy.sock
         weight: 10
         backend: habackend
