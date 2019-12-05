@@ -4,9 +4,9 @@
   remote_user: root
   gather_facts: no
   vars:
-    instance_ip_addresses: []
     network:
       selfLink: projects/ansible-automates-20191211/global/networks/default
+    ansible_python_interpreter: /var/lib/awx/venv/ansible/bin/python
 
   tasks:
     - name: create instance(s) on gce
@@ -58,6 +58,8 @@
   remote_user: mburgerh
   become: yes
   gather_facts: no
+  vars:
+    ansible_python_interpreter: /usr/bin/python
 
   tasks:
     - name: wait for instances to come up

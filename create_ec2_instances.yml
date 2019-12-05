@@ -2,8 +2,6 @@
 - name: create instance(s) on ec2
   hosts: localhost
   gather_facts: no
-  vars:
-    instance_ip_addresses: []
 
   tasks:
     - name: create instance(s) on ec2
