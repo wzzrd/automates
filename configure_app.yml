@@ -22,4 +22,4 @@
       service:
         name: httpd
         enabled: yes
-        state: running
+        state: started
