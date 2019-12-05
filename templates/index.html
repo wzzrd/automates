@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            AnsibleAutomates 2019 MultiCloud Demo
+        </title>
+        <script type="text/javascript">
+            function random_bg_color() {
+                var x = Math.floor(Math.random() * 256);
+                var y = Math.floor(Math.random() * 256);
+                var z = Math.floor(Math.random() * 256);
+                var bgColor = "rgb(" + x + "," + y + "," + z + ")";
+                console.log(bgColor);
+                document.body.style.background = bgColor;
+                }
+                function hashCode(str) { // java String#hashCode
+                    var hash = 0;
+                    for (var i = 0; i < str.length; i++) {
+                        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+                    }
+                    return hash;
+                }
+
+                function intToRGB(i) {
+                    var c = (i & 0x00FFFFFF)
+                        .toString(16)
+                        .toUpperCase();
+
+                    return "#00000".substring(0, 6 - c.length) + c;
+                }
+        </script>
+        <style>
+          h2 {
+              text-align: center;
+              font-family: sans-serif;
+          }
+        </style>
+    </head>
+    <body>
+        <script>
+            console.log(intToRGB(hashCode("taishogun")));
+            document.body.style.backgroundColor = "#intToRGB(hashCode('taishogun'))";
+        </script>
+        <h2>
+        You are being served from {{ cloud }} for this request.
+        </h2>
+    </body>
+</html>
