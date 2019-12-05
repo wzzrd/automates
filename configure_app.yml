@@ -6,6 +6,20 @@
   tasks:
     - name: install web server
       yum:
-          update_cache: yes
-          name: httpd
-          state: present
+        update_cache: yes
+        name: httpd
+        state: present
+
+    - name: drop index.html in place
+      template:
+        dest: /var/www/html/index.html
+        src: index.html
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: make sure web server is running
+      service:
+        name: httpd
+        enabled: yes
+        state: running
