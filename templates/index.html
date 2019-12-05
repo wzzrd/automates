@@ -6,14 +6,6 @@
             AnsibleAutomates 2019 MultiCloud Demo
         </title>
         <script type="text/javascript">
-            function random_bg_color() {
-                var x = Math.floor(Math.random() * 256);
-                var y = Math.floor(Math.random() * 256);
-                var z = Math.floor(Math.random() * 256);
-                var bgColor = "rgb(" + x + "," + y + "," + z + ")";
-                console.log(bgColor);
-                document.body.style.background = bgColor;
-                }
                 function hashCode(str) { // java String#hashCode
                     var hash = 0;
                     for (var i = 0; i < str.length; i++) {
@@ -21,7 +13,6 @@
                     }
                     return hash;
                 }
-
                 function intToRGB(i) {
                     var c = (i & 0x00FFFFFF)
                         .toString(16)
@@ -39,8 +30,8 @@
     </head>
     <body>
         <script>
-            console.log(intToRGB(hashCode("taishogun")));
-            document.body.style.backgroundColor = "#intToRGB(hashCode('taishogun'))";
+            console.log(intToRGB(hashCode("{{ ansible_fqdn }}")));
+            document.body.style.backgroundColor = "#" + intToRGB(hashCode("{{ ansible_fqdn }}"));
         </script>
         <h2>
         You are being served from {{ cloud }} for this request.
