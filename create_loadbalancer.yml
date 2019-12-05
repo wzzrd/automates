@@ -1,0 +1,31 @@
+---
+- name: create loadbalancer setup
+  hosts: all
+  remote_user: ansible
+  become: yes
+  vars:
+    haproxy_backend_name: 'habackend'
+    haproxy_backend_mode: 'http'
+    haproxy_backend_balance_method: 'roundrobin'
+    haproxy_backend_httpchk: 'HEAD / HTTP/1.1\r\nHost:localhost'
+
+    haproxy_frontend_name: 'hafrontend'
+    haproxy_frontend_bind_address: '*'
+    haproxy_frontend_port: 80
+    haproxy_frontend_mode: 'http'
+
+  tasks:
+    - include_role:
+        name: geerlingguy.haproxy
+      when: "ansible_fqdn == 'loadbalancer.ibm.nontoonyt.com'"
+
+  post_tasks:
+    - name: add cloud servers to pool
+      haproxy:
+        state: enabled
+        host: " {{ item }}"
+        socket: /var/run/haproxy.sock
+        weight: 10
+        backend: habackend
+      delegate_to: loadbalancer.ibm.nontoonyt.com
+      when: "ansible_fqdn != 'loadbalancer.ibm.nontoonyt.com'"
