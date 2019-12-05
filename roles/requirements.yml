@@ -1,3 +1,4 @@
 ---
 roles:
 - unxnn.chrony
+- geerlingguy.haproxy
