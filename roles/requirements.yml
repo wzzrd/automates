@@ -1,3 +1,6 @@
 ---
 roles:
 - geerlingguy.java
+- geerlingguy.ntp
+- geerlingguy.security
+- geerlingguy.firewall

@@ -1,0 +1,30 @@
+---
+- name: configure operating system
+  hosts: all
+  remote_user: ansible
+  become: yes
+  vars:
+    ntp_timezone: Europe/Amsterdam
+    ntp_enabled: yes
+    ntp_manage_config: yes
+    ntp_pool_area: europe
+    security_ssh_permit_root_login: without-password
+    security_ssh_usedns: no
+    security_autoupdate_enabled: yes
+    security_fail2ban_enabled: yes
+    firewall_state: started
+    firewall_enabled_at_boot: true
+    firewall_allowed_tcp_ports:
+      - "22"
+      - "80"
+
+  pre_tasks:
+    - name: upgrade all packages
+      yum:
+        name: '*'
+        state: latest
+
+  roles:
+    - geerlingguy.ntp
+    - geerlingguy.security
+    - geerlingguy.firewall
