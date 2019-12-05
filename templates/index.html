@@ -20,6 +20,22 @@
 
                     return "#00000".substring(0, 6 - c.length) + c;
                 }
+                function hexToRgb(hex) {
+                    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                    return result ? {
+                        r: parseInt(result[1], 16),
+                        g: parseInt(result[2], 16),
+                        b: parseInt(result[3], 16)
+                    } : null;
+                }
+                function setContrast(rgb) {
+                    // http://www.w3.org/TR/AERT#color-contrast
+                    var o = Math.round(((parseInt(rgb[0]) * 299) +
+                        (parseInt(rgb[1]) * 587) +
+                        (parseInt(rgb[2]) * 114)) / 1000);
+                    var fore = (o > 125) ? 'black' : 'white';
+                    return fore;
+                }
         </script>
         <style>
           h2 {
@@ -31,7 +47,12 @@
     <body>
         <script>
             console.log(intToRGB(hashCode("{{ ansible_fqdn }}")));
-            document.body.style.backgroundColor = "#" + intToRGB(hashCode("{{ ansible_fqdn }}"));
+            localbgcolor = "#" + intToRGB(hashCode("{{ ansible_fqdn }}"));
+            document.body.style.backgroundColor = localbgcolor;
+            var rgb = hexToRgb(localbgcolor);
+            console.log(rgb);
+            console.log(setContrast(rgb));
+            document.body.style.color = setContrast(rgb);
         </script>
         <h2>
         You are being served from {{ cloud }} for this request.
