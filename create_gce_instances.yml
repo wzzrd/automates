@@ -22,7 +22,7 @@
             boot: yes
             initialize_params:
               disk_size_gb: 20
-              source_image: projects/rhel-cloud/global/images/rhel-7-v20191121
+              source_image: projects/rhel-cloud/global/images/rhel-8-v20191121
         network_interfaces:
           - network: "{{ network }}"
             access_configs:
