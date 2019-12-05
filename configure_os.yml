@@ -14,3 +14,10 @@
 
   roles:
     - unxnn.chrony
+
+  post_tasks:
+    - name: shut down firewalld for now
+      service:
+        name: firewalld
+        enabled: no
+        state: stopped
