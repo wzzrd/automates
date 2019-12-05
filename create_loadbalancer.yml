@@ -24,7 +24,7 @@
       haproxy:
         state: enabled
         host: " {{ ansible_host }}"
-        socket: /var/run/haproxy.sock
+        socket: /var/lib/haproxy/stats
         weight: 10
         backend: habackend
       delegate_to: loadbalancer.ibm.nontoonyt.com
