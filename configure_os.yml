@@ -16,7 +16,7 @@
     - unxnn.chrony
 
   post_tasks:
-    - name: shut jown firewalld for now
+    - name: shut down firewalld for now
       service:
         name: firewalld
         enabled: no
