@@ -55,7 +55,7 @@
 
 - name: check connectivity
   hosts: tmpgroup
-  remote_user: maxim
+  remote_user: mburgerh
   become: yes
   gather_facts: no
 
