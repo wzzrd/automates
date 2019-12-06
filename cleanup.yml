@@ -28,7 +28,7 @@
         state: absent
         zone: europe-west2-a
 
-    - name: delete resource group
+    - name: clean up azure
       azure_rm_resourcegroup:
         name: automates2019
         location: westeurope
