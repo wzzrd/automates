@@ -13,17 +13,18 @@
         group: root
         mode: 0755
 
+    - name: set external ip address fact
+      set_fact:
+        external_ip: "{{ ansible_host | default(ansible_ssh_host) }}"
+        cacheable: yes
+      when: cloud == "google"
+
     - name: set up custom facts
       template:
         src: facts.fact
         dest: /etc/ansible/facts.d/facts.fact
         mode: 0755
 
-    - name: set external ip address fact
-      set_fact:
-        ansible_host: "{{ ansible_ssh_host }}"
-        cacheable: yes
-      when: cloud == "google"
-
     - name: reload ansible_local
       setup:
+      filter: ansible_local

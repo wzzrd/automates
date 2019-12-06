@@ -30,14 +30,9 @@
       set_fact:
         backend_server_list: []
 
-    - name: make sure ansible_host is set
-      set_fact:
-        ansible_host: "{{ ansible_ssh_host }}"
-      when: ansible_host is not defined
-
     - name: populate loadbalancer list of dictionaries
       set_fact:
-          backend_server_list: "{{ backend_server_list + [ {'name': item, 'address': hostvars[item]['ansible_host'] + ':80'}] }}"
+          backend_server_list: "{{ backend_server_list + [ {'name': item, 'address': hostvars[item]['ansible_local']['facts']['external_ip'] + ':80'}] }}"
       loop: "{{ query('inventory_hostnames', 'server_role_webserver:!server_role_loadbalancer') }}"
 
   tasks:
