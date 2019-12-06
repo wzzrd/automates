@@ -1,4 +1,6 @@
 ---
 roles:
+- robertdebock.epel
+- robertdebock.fail2ban
 - unxnn.chrony
 - geerlingguy.haproxy
