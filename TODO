@@ -1,0 +1,8 @@
+TO DO LIST
+----------
+
+- create ansible user as admin as part of deployment (azure, gce)
+- create ansible user through user-data (ec2) or rename ec2-user
+- drop sudo, ansible user creation from playbooks
+- remove post_tasks from create_loadbalancer.yml
+- create branch with debug tasks removed
