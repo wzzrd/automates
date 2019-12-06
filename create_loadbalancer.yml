@@ -8,15 +8,39 @@
     haproxy_backend_mode: 'http'
     haproxy_backend_balance_method: 'roundrobin'
     haproxy_backend_httpchk: 'HEAD / HTTP/1.1\r\nHost:localhost'
+    haproxy_backend_servers: {}
 
     haproxy_frontend_name: 'hafrontend'
     haproxy_frontend_bind_address: '*'
     haproxy_frontend_port: 80
     haproxy_frontend_mode: 'http'
 
+    haproxy_stats_enable: true
+    haproxy_stats_port: 8080
+    haproxy_stats_refresh: 15s
+    haproxy_stats_username: 'admin'
+    haproxy_stats_password: 'okboomer'
+    haproxy_stats_uri: /stats
+
+  pre_tasks:
+    - name: create webserver and loadbalancer group
+      group_by:
+          key: server_role_{{ ansible_local['facts']['server_role'] }}
+
+    - name: create empty list for collection of backend servers
+      set_fact:
+        backend_server_list: []
+
+    - name: populate loadbalancer list of dictionaries
+      set_fact:
+          backend_server_list: "{{ backend_server_list + [ {'name': item, 'address': item + ':80'}] }}"
+      loop: "{{ query('inventory_hostnames', 'server_role_webserver:!server_role_loadbalancer') }}"
+
   tasks:
     - include_role:
         name: geerlingguy.haproxy
+      vars:
+        haproxy_backend_servers: "{{ backend_server_list }}"
       when: "ansible_fqdn == 'loadbalancer.ibm.nontoonyt.com'"
 
   post_tasks:
