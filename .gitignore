@@ -1,0 +1,8 @@
+### https://raw.github.com/github/gitignore/86e01548dd97d6a1b5fc9ad303f10111b17ce0a9/Global/Ansible.gitignore
+
+*.retry
+collections/*
+!collections/requirements.yml
+
+roles/*
+!roles/requirements.yml
