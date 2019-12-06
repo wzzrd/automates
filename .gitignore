@@ -6,3 +6,5 @@ collections/*
 
 roles/*
 !roles/requirements.yml
+
+inventory
