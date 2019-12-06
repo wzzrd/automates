@@ -5,6 +5,18 @@
   become: yes
   vars:
     chrony_timezone: Europe/Amsterdam
+    firewall_services:
+      - name: http
+      - name: ssh
+      - name: 8080
+        proto: tcp
+    fail2ban_jail_configuration:
+      - section: sshd
+        option: enabled
+        value: true
+      - section: sshd
+        option: port
+        value: ssh
 
   pre_tasks:
     - name: set Europe/Amsterdam as timezone
@@ -13,12 +25,7 @@
         name: Europe/Amsterdam
 
   roles:
+    - robertdebock.epel
+    - robertdebock.firewall
+    - robertdebock.fail2ban
     - unxnn.chrony
-
-  post_tasks:
-    - name: shut down firewalld for now
-      service:
-        name: firewalld
-        enabled: no
-        state: stopped
-      ignore_errors: yes
