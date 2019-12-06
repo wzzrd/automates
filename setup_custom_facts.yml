@@ -17,7 +17,6 @@
       set_fact:
         external_ip: "{{ ansible_host | default(ansible_ssh_host) }}"
         cacheable: yes
-      when: cloud == "google"
 
     - name: set up custom facts
       template:
