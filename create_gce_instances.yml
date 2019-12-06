@@ -31,6 +31,9 @@
         state: present
         status: RUNNING
         zone: europe-west2-a
+        tag:
+          items:
+            - http-server
       register: gce
       delegate_to: localhost
 
