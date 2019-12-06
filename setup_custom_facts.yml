@@ -27,4 +27,4 @@
 
     - name: reload ansible_local
       setup:
-      filter: ansible_local
+        filter: ansible_local
