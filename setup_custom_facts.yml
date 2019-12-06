@@ -21,3 +21,9 @@
 
     - name: reload ansible_local
       setup:
+
+    - name: set external ip address fact
+      set_fact:
+        ansible_host: "{{ ansible_ssh_host }}"
+        cacheable: yes
+      when: ansible_local['facts']['cloud'] == "google"
