@@ -1,7 +1,12 @@
 ---
-roles:
-- robertdebock.epel
-- robertdebock.fail2ban
-- git+https://github.com/wzzrd/ansible-role-firewall,add_rhel78_support
-- unxnn.chrony
-- geerlingguy.haproxy
+- src: robertdebock.epel
+
+- src: robertdebock.fail2ban
+
+- src: git+https://github.com/wzzrd/ansible-role-firewall
+  version: add_rhel78_support
+  name: robertdebock.firewall
+
+- src: unxnn.chrony
+
+- src: geerlingguy.haproxy
