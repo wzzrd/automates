@@ -1,7 +1,7 @@
 ---
 - name: configure operating system
   hosts: all
-  remote_user: ec2-user
+  remote_user: ansible
   become: yes
   vars:
     chrony_timezone: Europe/Amsterdam
