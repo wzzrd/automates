@@ -39,7 +39,10 @@
   hosts: tmpgroup
   remote_user: ansible
   become: yes
-  gather_facts: no
+  gather_facts: yes
+  vars:
+    cloud: aws
+    server_role: webserver
 
   tasks:
     - name: wait for instances to come up
