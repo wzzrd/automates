@@ -20,7 +20,7 @@
           event: "{{ tag }}"
         vpc_subnet_id: subnet-900e39da
         group_id: sg-b2d436da
-        user_data: "{{ lookup('template', 'cloud-config.txt.j2' }}"
+        user_data: "{{ lookup('template', 'cloud-config.txt.j2') }}"
       register: ec2
       delegate_to: localhost
 
