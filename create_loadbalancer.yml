@@ -2,7 +2,7 @@
 - name: create loadbalancer setup
   hosts: all
   remote_user: appuser
-  become: yes
+  become: no
   vars:
     haproxy_backend_name: 'habackend'
     haproxy_backend_mode: 'http'
@@ -41,14 +41,4 @@
       vars:
         haproxy_backend_servers: "{{ backend_server_list }}"
       when: "ansible_fqdn == 'loadbalancer.ibm.nontoonyt.com'"
-
-  post_tasks:
-    - name: add cloud servers to pool
-      haproxy:
-        state: enabled
-        host: " {{ ansible_host }}"
-        socket: /var/lib/haproxy/stats
-        weight: 10
-        backend: habackend
-      delegate_to: loadbalancer.ibm.nontoonyt.com
-      when: "ansible_fqdn != 'loadbalancer.ibm.nontoonyt.com'"
+      become: yes
