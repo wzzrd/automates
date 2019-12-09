@@ -16,4 +16,4 @@
       replace:
         path: /var/www/html/index.html
         regexp: REPLACE_THIS_TOKEN
-        replace: "{{ hostvars[item]['ansible_local']['facts']['external_ip'] }}"
+        replace: "{{ hostvars[inventory_hostname]['ansible_local']['facts']['external_ip'] }}"
