@@ -35,10 +35,9 @@
           backend_server_list: "{{ backend_server_list + [ {'name': item, 'address': hostvars[item]['ansible_local']['facts']['external_ip'] + ':80'}] }}"
       loop: "{{ query('inventory_hostnames', 'server_role_webserver:!server_role_loadbalancer') }}"
 
-  tasks:
-    - include_role:
-        name: geerlingguy.haproxy
+  roles:
+    - role: geerlingguy.haproxy
+      become: yes
       vars:
         haproxy_backend_servers: "{{ backend_server_list }}"
       when: "ansible_fqdn == 'loadbalancer.ibm.nontoonyt.com'"
-      become: yes
