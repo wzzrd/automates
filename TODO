@@ -1,13 +1,13 @@
 TO DO LIST
 ----------
 
-- create ansible user as admin as part of deployment (azure, gce)
-- create ansible user through user-data (ec2) or rename ec2-user
-- drop sudo, ansible user creation from playbooks
-- remove post_tasks from create_loadbalancer.yml
-- create branch with debug tasks removed
-- create "glue" playbooks, move apache from configure_app into glue
-- setfacl in glue playbook
-- create app user in glue playbook
-- simplify workflow template
-- drop two versions of app in separate repo
+[x] create ansible user as admin as part of deployment (azure, gce)
+[x] create ansible user through user-data (ec2) or rename ec2-user
+[x] drop sudo, ansible user creation from playbooks
+[x] remove post_tasks from create_loadbalancer.yml
+[ ] create branch with debug tasks removed
+[x] create "glue" playbooks, move apache from configure_app into glue
+[x] setfacl in glue playbook
+[x] create app user in glue playbook
+[x] simplify workflow template
+[x] drop two versions of app in separate repo
