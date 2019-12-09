@@ -1,25 +1,12 @@
 ---
 - name: configure app
   hosts: all
-  become: yes
+  remote_user: appuser
+  become: no
 
   tasks:
-    - name: install web server
-      yum:
-        update_cache: yes
-        name: httpd
-        state: present
-
-    - name: drop index.html in place
-      template:
-        dest: /var/www/html/index.html
-        src: index.html
-        owner: root
-        group: root
-        mode: 0644
-
-    - name: make sure web server is running
-      service:
-        name: httpd
-        enabled: yes
-        state: started
+    - name: clone app repo
+      git:
+        dest: /var/www/html
+        repo: https://github.com/wzzrd/automates_webapp
+        version: v1.0

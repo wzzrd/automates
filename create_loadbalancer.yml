@@ -1,7 +1,7 @@
 ---
 - name: create loadbalancer setup
   hosts: all
-  remote_user: ansible
+  remote_user: appuser
   become: yes
   vars:
     haproxy_backend_name: 'habackend'
