@@ -5,19 +5,24 @@
   become: yes
 
   tasks:
-    - name: install software
+    - name: install httpd, git
       yum:
         name: httpd,git
         state: present
 
-    - name: start apache
+    - name: start httpd
       service:
           name: httpd
           enabled: yes
           state: started
 
-    - name: clone app repo
+    - name: deploy version 1 of the app
       git:
         dest: /var/www/html
         repo: https://github.com/wzzrd/automates_webapp
         version: v1.0
+
+    - name: make sure permissions are ok
+      file:
+        path: /var/www/html/index.html
+        mode: 0644
