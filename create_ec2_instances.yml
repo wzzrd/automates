@@ -26,7 +26,7 @@
 
     - name: add new hosts to tmpgroup
       add_host:
-        name: "{{ item.ec2_ip_address }}"
+        name: "{{ item.public_ip }}"
         groups: tmpgroup
       loop: "{{ ec2.instances }}"
 
