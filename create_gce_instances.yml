@@ -60,7 +60,7 @@
   hosts: tmpgroup
   remote_user: ansible
   become: yes
-  gather_facts: yes
+  gather_facts: no
   vars:
     cloud: google
     server_role: webserver
