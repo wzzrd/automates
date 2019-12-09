@@ -1,0 +1,36 @@
+---
+- name: clean up simple instance
+  hosts: all
+  remote_user: ansible
+  become: yes
+
+  tasks:
+    - name: stop apache, fail2ban, firewalld
+      service:
+        name: "{{ item }}"
+        enabled: no
+        state: stopped
+      loop:
+        - httpd
+        - fail2ban
+        - firewalld
+
+    - name: remove apache, git
+      yum:
+        name: httpd,git,firewalld,iptables,fail2ban,epel-release
+        state: absent
+
+    - name: remove app
+      file:
+          path: /var/www/html
+          state: absent
+
+    - name: remove appuser
+      user:
+        name: appuser
+        uid: 1020
+        state: absent
+
+    - name: reset to America/New_York as timezone
+      timezone:
+        name: America/New_York
