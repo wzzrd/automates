@@ -5,6 +5,17 @@
   become: yes
 
   tasks:
+    - name: install software
+      yum:
+        name: httpd,git
+        state: present
+
+    - name: start apache
+      service:
+          name: httpd
+          enabled: yes
+          state: started
+
     - name: create appuser
       user:
         name: appuser

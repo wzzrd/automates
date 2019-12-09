@@ -13,7 +13,7 @@
     - name: start apache
       service:
           name: httpd
-          enabled: yes # not required. Whether the service should start on boot. B(At least one of state and enabled are required.)
+          enabled: yes
           state: started
 
     - name: clone app repo
