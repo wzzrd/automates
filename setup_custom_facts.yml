@@ -1,29 +1,22 @@
----
-- name: finish configuration of hosts
-  hosts: all
-  become: yes
-  gather_facts: yes
+- name: create custom fact directory
+  file:
+    path: /etc/ansible/facts.d
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
 
-  tasks:
-    - name: create custom fact directory
-      file:
-        path: /etc/ansible/facts.d
-        state: directory
-        owner: root
-        group: root
-        mode: 0755
+- name: set external ip address fact
+  set_fact:
+    external_ip: "{{ ansible_host | default(ansible_ssh_host) }}"
+    cacheable: yes
 
-    - name: set external ip address fact
-      set_fact:
-        external_ip: "{{ ansible_host | default(ansible_ssh_host) }}"
-        cacheable: yes
+- name: set up custom facts
+  template:
+    src: facts.fact
+    dest: /etc/ansible/facts.d/facts.fact
+    mode: 0755
 
-    - name: set up custom facts
-      template:
-        src: facts.fact
-        dest: /etc/ansible/facts.d/facts.fact
-        mode: 0755
-
-    - name: reload ansible_local
-      setup:
-        filter: ansible_local
+- name: reload ansible_local
+  setup:
+    filter: ansible_local
