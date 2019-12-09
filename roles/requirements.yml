@@ -3,9 +3,7 @@
 
 - src: robertdebock.fail2ban
 
-- src: git+https://github.com/wzzrd/ansible-role-firewall
-  version: add_rhel78_support
-  name: robertdebock.firewall
+- src: robertdebock.firewall
 
 - src: unxnn.chrony
 
