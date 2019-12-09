@@ -14,10 +14,11 @@
         - httpd
         - fail2ban
         - firewalld
+      ignore_errors: yes
 
-    - name: remove apache, git
+    - name: remove apache, git, more
       yum:
-        name: httpd,git,firewalld,iptables,fail2ban,epel-release
+        name: httpd,git,firewalld,iptables,fail2ban,epel-release,httpd-filesystem
         state: absent
 
     - name: remove app
