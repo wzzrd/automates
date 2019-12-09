@@ -6,3 +6,8 @@ TO DO LIST
 - drop sudo, ansible user creation from playbooks
 - remove post_tasks from create_loadbalancer.yml
 - create branch with debug tasks removed
+- create "glue" playbooks, move apache from configure_app into glue
+- setfacl in glue playbook
+- create app user in glue playbook
+- simplify workflow template
+- drop two versions of app in separate repo

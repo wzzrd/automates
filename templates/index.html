@@ -1,61 +1,77 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>
-            AnsibleAutomates 2019 MultiCloud Demo
-        </title>
-        <script type="text/javascript">
-                function hashCode(str) { // java String#hashCode
-                    var hash = 0;
-                    for (var i = 0; i < str.length; i++) {
-                        hash = str.charCodeAt(i) + ((hash << 5) - hash);
-                    }
-                    return hash;
-                }
-                function intToRGB(i) {
-                    var c = (i & 0x00FFFFFF)
-                        .toString(16)
-                        .toUpperCase();
 
-                    return "#00000".substring(0, 6 - c.length) + c;
-                }
-                function hexToRgb(hex) {
-                    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-                    return result ? {
-                        r: parseInt(result[1], 16),
-                        g: parseInt(result[2], 16),
-                        b: parseInt(result[3], 16)
-                    } : null;
-                }
-                function setContrast(rgb) {
-                    // http://www.w3.org/TR/AERT#color-contrast
-                    var o = Math.round(((parseInt(rgb[0]) * 299) +
-                        (parseInt(rgb[1]) * 587) +
-                        (parseInt(rgb[2]) * 114)) / 1000);
-                    var fore = (o > 125) ? 'black' : 'white';
-                    return fore;
-                }
-        </script>
-        <style>
-          h2 {
-              text-align: center;
-              font-family: sans-serif;
-          }
-        </style>
-    </head>
-    <body>
-        <script>
-            console.log(intToRGB(hashCode("{{ ansible_fqdn }}")));
-            localbgcolor = "#" + intToRGB(hashCode("{{ ansible_fqdn }}"));
-            document.body.style.backgroundColor = localbgcolor;
-            var rgb = hexToRgb(localbgcolor);
-            console.log(rgb);
-            console.log(setContrast(rgb));
-            document.body.style.color = setContrast(rgb);
-        </script>
-        <h2>
-        You are being served from {{ ansible_local['facts']['cloud'] }} for this request.
-        </h2>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <title>
+        AnsibleAutomates 2019 MultiCloud Demo
+    </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function hashCode(str) { // java String#hashCode
+            var hash = 0;
+            for (var i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            return hash;
+        }
+        function intToRGB(i) {
+            var c = (i & 0x00FFFFFF)
+                .toString(16)
+                .toUpperCase();
+
+            return "#00000".substring(0, 6 - c.length) + c;
+        }
+        function hexToRgb(hex) {
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+        function setContrast(rgb) {
+            // http://www.w3.org/TR/AERT#color-contrast
+            var o = Math.round(((parseInt(rgb[0]) * 299) +
+                (parseInt(rgb[1]) * 587) +
+                (parseInt(rgb[2]) * 114)) / 1000);
+            var fore = (o > 125) ? 'black' : 'white';
+            return fore;
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css?family=Overpass" rel="stylesheet">
+    <style>
+        .text {
+            width: 800px;
+            text-align: center;
+            font-weight: bold;
+            font-size: x-large;
+            font-family: Overpass;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        console.log(intToRGB(hashCode("{{ ansible_fqdn }}")));
+        localbgcolor = "#" + intToRGB(hashCode("{{ ansible_fqdn }}"));
+        document.body.style.backgroundColor = localbgcolor;
+        var rgb = hexToRgb(localbgcolor);
+        console.log(rgb);
+        console.log(setContrast(rgb));
+        document.body.style.color = setContrast(rgb);
+    </script>
+    <div class="text">This is version 1 of the web app.</div>
+    <div class="text">Your public ip is: <div id="ipaddress"></div></div>
+</body>
+
+<script>
+    $.get('http://api.ipify.org', function (responseText) {
+        $('#ipaddress').html(responseText);
+    });
+</script>
+
 </html>
