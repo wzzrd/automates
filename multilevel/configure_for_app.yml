@@ -1,6 +1,7 @@
 ---
 - name: configure for app
   hosts: all
+  remote_user: ansible
   become: yes
 
   tasks:
