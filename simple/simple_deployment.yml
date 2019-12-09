@@ -1,7 +1,7 @@
 ---
 - name: simple app deployment
   hosts: all
-  remote_user: ec2-user
+  remote_user: ansible
   become: yes
 
   tasks:
