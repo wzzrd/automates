@@ -21,6 +21,7 @@
         vpc_subnet_id: subnet-900e39da
         group_id: sg-b2d436da
       register: ec2
+      user_data: "{{ lookup('template', 'cloud-config.txt.j2' }}"
       delegate_to: localhost
 
     - name: add new hosts to tmpgroup
@@ -36,7 +37,7 @@
 
 - name: check connectivity and set-up user
   hosts: tmpgroup
-  remote_user: ec2-user
+  remote_user: ansible
   become: yes
   gather_facts: no
 
@@ -45,28 +46,4 @@
       wait_for_connection:
         delay: 10
 
-    - name: create ansible user
-      user:
-        name: ansible
-        groups: wheel
-        append: yes
-        uid: 1010
-        state: present
-
-    - name: inject ssh key
-      authorized_key:
-        user: ansible
-        key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCy1QtNy21ILU3OjY0vgGCFYB5EWZLOwCMe4GqTjFfeVDvBgbQzHmf9OHMcoTreUWnPxgZa2frwzFgzamJl978ixWxPKpeNI9qQ1BO9ZBbg5YGVIYrNFFiw0j2B1mOx4u3tn1ntIW3cAJuOmFSI6U6NZy8JRGmkIvxjBzSqPTTUNfDNGtk00XiwrDHD69e0Zn5sX9W7ERf0QsWGK0tlj2YnaOty2MsRia96OgqGO+oqd6FggmIwPIb+2S0RghQLSRLyWFMKY68zZwugSLkl9r/TSrHPgJjGMWaIX1LyO8SbGrLToL7Cg0ptQrhosz1T2+zcdc+Z6fppTB2lF3cvF92b root@tower.ibm.nontoonyt.com"
-        state: present
-
-    - name: change sudoers file, uncomment nopasswd line for wheel
-      lineinfile:
-        dest: /etc/sudoers
-        regexp: '^#\s*\%wheel\s*ALL=\(ALL\)\s*NOPASSWD:\s*ALL.*$'
-        line: '%wheel   ALL=(ALL)       NOPASSWD: ALL'
-
-    - name: change sudoers file, comment out plain wheel line
-      lineinfile:
-        dest: /etc/sudoers
-        regexp: '^\%wheel\s*ALL=\(ALL\)\s*ALL.*$'
-        line: '#%wheel   ALL=(ALL)       ALL'
+    - include_tasks: setup_custom_facts.yml
