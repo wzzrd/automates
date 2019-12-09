@@ -1,0 +1,12 @@
+---
+- name: configure app
+  hosts: all
+  remote_user: appuser
+  become: no
+
+  tasks:
+    - name: clone app repo
+      git:
+        dest: /var/www/html
+        repo: https://github.com/wzzrd/automates_webapp
+        version: v1.0

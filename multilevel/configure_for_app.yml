@@ -1,0 +1,26 @@
+---
+- name: configure for app
+  hosts: all
+  remote_user: ec2-user
+  become: yes
+
+  tasks:
+    - name: create appuser
+      user:
+        name: appuser
+        uid: 1020
+        state: present
+
+    - name: inject ssh key
+      authorized_key:
+        user: appuser
+        key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCy1QtNy21ILU3OjY0vgGCFYB5EWZLOwCMe4GqTjFfeVDvBgbQzHmf9OHMcoTreUWnPxgZa2frwzFgzamJl978ixWxPKpeNI9qQ1BO9ZBbg5YGVIYrNFFiw0j2B1mOx4u3tn1ntIW3cAJuOmFSI6U6NZy8JRGmkIvxjBzSqPTTUNfDNGtk00XiwrDHD69e0Zn5sX9W7ERf0QsWGK0tlj2YnaOty2MsRia96OgqGO+oqd6FggmIwPIb+2S0RghQLSRLyWFMKY68zZwugSLkl9r/TSrHPgJjGMWaIX1LyO8SbGrLToL7Cg0ptQrhosz1T2+zcdc+Z6fppTB2lF3cvF92b root@tower.ibm.nontoonyt.com"
+        state: present
+
+    - name: set acl on web root
+      acl:
+        path: /var/www/html
+        entity: appuser
+        state: present
+        etype: group
+        permissions: rwx

@@ -1,0 +1,23 @@
+---
+- name: simple app deployment
+  hosts: all
+  remote_user: ec2-user
+  become: yes
+
+  tasks:
+    - name: install software
+      yum:
+        name: httpd,git
+        state: present
+
+    - name: start apache
+      service:
+          name: httpd
+          enabled: yes # not required. Whether the service should start on boot. B(At least one of state and enabled are required.)
+          state: started
+
+    - name: clone app repo
+      git:
+        dest: /var/www/html
+        repo: https://github.com/wzzrd/automates_webapp
+        version: v1.0
