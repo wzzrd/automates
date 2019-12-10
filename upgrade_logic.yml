@@ -21,7 +21,7 @@
 
 - name: wait a bit
   pause:
-    seconds: 20
+    seconds: 30
     echo: no
 
 - name: enable server in haproxy
