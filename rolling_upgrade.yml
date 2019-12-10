@@ -11,36 +11,7 @@
           key: server_role_{{ ansible_local['facts']['server_role'] }}
 
   tasks:
-    - name: roll the upgrade over each server in turn
-      block:
-        - name: disable server in haproxy
-          haproxy:
-            state: disabled
-            host: "{{ inventory_hostname }}"
-          delegate_to: loadbalancer.ibm.nontoonyt.com
-
-        - name: clone app repo
-          git:
-            dest: /var/www/html
-            repo: https://github.com/wzzrd/automates_webapp
-            version: "{{ app_version }}"
-            force: yes
-
-        - name: replace app token
-          replace:
-            path: /var/www/html/index.html
-            regexp: REPLACE_THIS_TOKEN
-            replace: "{{ hostvars[inventory_hostname]['ansible_local']['facts']['cloud'] }}"
-
-        - name: wait a bit
-          pause:
-            seconds: 20
-            echo: no
-
-        - name: enable server in haproxy
-          haproxy:
-            state: enabled
-            host: "{{ inventory_hostname }}"
-          delegate_to: loadbalancer.ibm.nontoonyt.com
+    - name: perform rolling upgrade to new version of app
+      include_tasks: upgrade_logic.yml
       loop: "{{ groups.server_role_webserver }}"
 
