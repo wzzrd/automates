@@ -3,6 +3,7 @@
   haproxy:
     state: disabled
     host: "{{ inventory_hostname }}"
+    socket: /var/lib/haproxy/stats
   delegate_to: loadbalancer.ibm.nontoonyt.com
 
 - name: clone app repo
@@ -27,4 +28,5 @@
   haproxy:
     state: enabled
     host: "{{ inventory_hostname }}"
+    socket: /var/lib/haproxy/stats
   delegate_to: loadbalancer.ibm.nontoonyt.com
