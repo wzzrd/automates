@@ -5,13 +5,7 @@
   become: no
   serial: 1
 
-  pre_tasks:
-    - name: create webserver and loadbalancer group
-      group_by:
-          key: server_role_{{ ansible_local['facts']['server_role'] }}
-
   tasks:
     - name: perform rolling upgrade to new version of app
       include_tasks: upgrade_logic.yml
-      loop: "{{ groups.server_role_webserver }}"
 
