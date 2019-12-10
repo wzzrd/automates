@@ -8,7 +8,7 @@
     - name: clone app repo
       git:
         dest: /var/www/html
-        repo: https://github.com/wzzrd/automates_webapp
+        repo: https://github.com/wzzrd/automates_webapp.git
         version: "{{ app_version }}"
         force: yes
 
